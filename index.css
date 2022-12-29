@@ -1,0 +1,74 @@
+body{
+    background-color: aqua;
+
+}
+
+.main{
+    background-color: red;
+}
+
+.cardiv{
+    height: 200px;
+    border-radius: 50px;
+    background-color:bisque;
+    margin: 20px 40px;
+    /* padding: 20px 10px; */
+    display: flex;
+    gap: 5rem;
+}
+
+.cardiv > img{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    shape-outside: circle();
+}
+
+.contdiv{
+    display: flex;
+    /* background-color: red; */
+    width: 100%;
+    justify-content: space-between;
+}
+
+.contdiv > h2, .weight{
+    padding-top: 70px;
+}
+
+.contdiv > h2::first-letter{
+    text-transform:capitalize;
+}
+
+.abildiv, .movesdiv{
+    padding: 20px 20px;
+}
+
+.abilhead{
+    text-align:end;
+}
+
+.moveshead{
+    text-align: center;
+}
+
+ul{
+    list-style: none;
+    margin: auto;
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    /* background-color: yellow; */
+    gap: 40px;
+    margin-bottom: 10px;
+}
+
+footer > a{
+    border: 1px solid black;
+    text-align: center;
+    width: 30px;
+    text-decoration: none;
+    background-color: black;
+    color: white;
+}
