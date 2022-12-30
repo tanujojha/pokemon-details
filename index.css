@@ -3,9 +3,17 @@ body{
 
 }
 
-.main{
-    background-color: red;
+.mainhead{
+    text-align: center;
+    margin-top: 10px;
+    background-color: antiquewhite;
+    font-family: Gill Sans;
+    font-weight: bold;
 }
+
+/* .main{
+    background-color: red;
+} */
 
 .cardiv{
     height: 200px;
@@ -18,6 +26,7 @@ body{
 }
 
 .cardiv > img{
+    background-color: aqua;
     border-radius: 50%;
     width: 200px;
     height: 200px;
@@ -26,9 +35,14 @@ body{
 
 .contdiv{
     display: flex;
-    /* background-color: red; */
     width: 100%;
     justify-content: space-between;
+}
+
+h2{
+    font-family: Geneva;
+    font-weight: bold;
+    font-style: oblique;
 }
 
 .contdiv > h2, .weight{
@@ -64,11 +78,7 @@ footer{
     margin-bottom: 10px;
 }
 
-footer > a{
-    border: 1px solid black;
-    text-align: center;
-    width: 30px;
+.nextbtn{
+    border: 2px solid black;
     text-decoration: none;
-    background-color: black;
-    color: white;
 }

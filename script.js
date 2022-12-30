@@ -1,12 +1,20 @@
-const url = "https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0"
+// const url = "https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0"
 let ofset = 0;
 
+// Main heading 
+let mainhead = document.createElement("h1")
+mainhead.classList.add("mainhead")
+mainhead.innerText = "Pokemon Details"
+document.body.appendChild(mainhead)
 
+
+// div to hold card components
 let maindiv = document.createElement("div")
 maindiv.classList.add("main");
 document.body.appendChild(maindiv);
 
 
+// function to create a card component
 let cardfunc = (obj)=>{
    
     let carddiv = document.createElement("div")
@@ -26,7 +34,7 @@ let cardfunc = (obj)=>{
 
     let weight = document.createElement("h4");
     weight.classList.add("weight")
-    weight.innerText= `weight: ${obj.weight}`;
+    weight.innerText= `Weight: ${obj.weight}`;
 
     let abildiv = document.createElement("div");
     abildiv.classList.add("abildiv")
@@ -62,9 +70,8 @@ let cardfunc = (obj)=>{
 }
 
 // get all pokemon
-const getall = async(url, ofset)=>{
+const getall = async(ofset)=>{
     let newurl = `https://pokeapi.co/api/v2/pokemon/?limit=20&offset=${ofset}`;
-    console.log(newurl);
     const response = await fetch(newurl)
 
     return response.json();
@@ -78,68 +85,13 @@ const getpoke = async (url)=>{
     return response.json();
 }
 
-getall(url, ofset).then((data)=>{
-    let pokelist = data.results;
-    pokelist.forEach((item) => {
-        getpoke(item.url).then((data)=>{
-            let obj = {
-                name: data.name,
-                imgurl: data.sprites.front_default,
-                weight: data.weight,
-                abil: [],
-                moves: []
-            }
-            // console.log(data.abilities);
-            let abilities = data.abilities;
-            let moves = data.moves;
-            
-            for(item of abilities){
-                obj.abil.push(item.ability.name)
-            }
 
-            for(let i = 0; i<5; i++){
-                obj.moves.push(moves[i].move.name)
-            }
-
-            // console.log(obj);
-            
-            cardfunc(obj)
-        })
-    });
-})
-
-
-
-// Footer / Pagination
-
-let footer = document.createElement("footer");
-let link1 = document.createElement("a");
-link1.classList.add("link1")
-link1.innerText=1
-// let btn1 = document.createElement("button");
-
-let link2 = document.createElement("a");
-link2.classList.add("link2")
-link2.innerText=2
-// let btn2 = document.createElement("button");
-
-let link3 = document.createElement("a");
-link3.classList.add("link3")
-link3.innerText=3
-// let btn3 = document.createElement("button");
-
-// link1.appendChild(btn1)
-footer.append(link1, link2, link3)
-document.body.appendChild(footer)
-
-link2.addEventListener("click", ()=>{
-    maindiv.remove();
-    document.body.appendChild(maindiv)
-    let of = 20; 
-    getall(url, of).then((data)=>{
-        let pokelist = data.results;
+// data and effect driver function
+let useEffect = (ofset)=>{
+    getall(ofset).then((data)=>{
+        let pokelist = data.results;    //list of pokemons
         pokelist.forEach((item) => {
-            getpoke(item.url).then((data)=>{
+            getpoke(item.url).then((data)=>{  //get data of a single pokemon
                 let obj = {
                     name: data.name,
                     imgurl: data.sprites.front_default,
@@ -147,7 +99,7 @@ link2.addEventListener("click", ()=>{
                     abil: [],
                     moves: []
                 }
-                // console.log(data.abilities);
+                
                 let abilities = data.abilities;
                 let moves = data.moves;
                 
@@ -158,13 +110,33 @@ link2.addEventListener("click", ()=>{
                 for(let i = 0; i<5; i++){
                     obj.moves.push(moves[i].move.name)
                 }
-    
-                // console.log(obj);
-                cardfunc(obj)
+                                              
+                cardfunc(obj);      // calling the card func to create dom elem 
             })
         });
     })
-    // console.log("hello");
+}
+
+useEffect(ofset);       //calling the function to list card items on load
+
+
+
+// Footer / Pagination
+let footer = document.createElement("footer");
+
+let next = document.createElement("button");
+next.classList.add("nextbtn")
+next.innerText="<<Load More>>"
+
+footer.append(next)
+document.body.appendChild(footer)
+
+
+// eventlistner on next button
+next.addEventListener("click", ()=>{
+    ofset += 20
+    useEffect(ofset)
+     
 })
 
 
